@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fishing Club Premium</title>
+    <title>Fishing Arsenal Premium</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -16,40 +16,75 @@
         }
 
         body {
-            /* Основной текст — сжатый и строгий */
             font-family: 'Roboto Condensed', sans-serif;
             background-color: var(--black-bg);
             color: var(--text-white);
             margin: 0;
             padding: 0;
             letter-spacing: 0.5px;
+            overflow-x: hidden;
         }
 
+        /* --- ШАПКА С АНИМАЦИЕЙ --- */
         header {
             background: linear-gradient(180deg, #001f3f 0%, var(--black-bg) 100%);
             border-bottom: 3px solid var(--bright-blue);
-            padding: 4rem 1rem;
+            padding: 3rem 1rem;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fishing-animation {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Анимация катушки */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Анимация лески (вибрация) */
+        @keyframes tension {
+            0% { stroke-dashoffset: 0; }
+            50% { stroke-dashoffset: 2; }
+            100% { stroke-dashoffset: 0; }
+        }
+
+        .reel {
+            transform-origin: 35px 75px; /* Точка центра катушки */
+            animation: spin 2s linear infinite;
+        }
+
+        .fishing-line {
+            stroke-dasharray: 4;
+            animation: tension 0.1s infinite linear;
         }
 
         header h1 {
-            /* Заголовок — острый и массивный */
             font-family: 'Oswald', sans-serif;
             font-size: 3.5rem;
             text-transform: uppercase;
             font-weight: 700;
             margin: 0;
             letter-spacing: 4px;
-            text-shadow: 2px 2px 0px var(--deep-ocean), 0 0 20px rgba(0, 210, 255, 0.4);
+            text-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
         }
 
+        /* --- ОСТАЛЬНЫЕ СТИЛИ --- */
         .container {
             max-width: 1100px;
-            margin: -30px auto 40px; /* Немного «наезжаем» на шапку */
+            margin: -20px auto 40px;
             padding: 0 20px;
             display: grid;
             grid-template-columns: 1fr 350px;
             gap: 30px;
+            position: relative;
+            z-index: 2;
         }
 
         .main-content {
@@ -62,23 +97,23 @@
             background: var(--card-bg);
             border: 1px solid #222;
             padding: 30px;
-            border-radius: 0; /* Делаем углы острыми */
+            border-radius: 0;
             border-left: 4px solid var(--bright-blue);
-            text-align: left; /* Строгий стиль */
+            text-align: left;
             transition: 0.3s ease;
             cursor: pointer;
         }
 
         .card:hover { 
             background: #202020;
-            border-left: 8px solid var(--neon-cyan);
+            border-left: 10px solid var(--neon-cyan);
             transform: translateX(10px);
         }
 
         .card h3 { 
             font-family: 'Oswald', sans-serif;
             color: var(--bright-blue); 
-            margin-top: 0;
+            margin: 0 0 10px 0;
             font-size: 1.6rem;
             text-transform: uppercase;
         }
@@ -92,12 +127,6 @@
             height: fit-content;
         }
 
-        .sidebar h3 {
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
         .vote-section {
             text-align: center;
             background: #000;
@@ -109,7 +138,7 @@
         button {
             font-family: 'Oswald', sans-serif;
             background: var(--bright-blue);
-            color: #000; /* Черный текст на ярком фоне для контраста */
+            color: #000;
             border: none;
             padding: 15px;
             text-transform: uppercase;
@@ -121,7 +150,6 @@
         }
 
         button:hover { 
-            background: var(--white);
             background: var(--neon-cyan);
             box-shadow: 0 0 20px var(--bright-blue);
         }
@@ -130,7 +158,6 @@
             font-family: 'Oswald', sans-serif;
             font-size: 4rem; 
             color: var(--text-white);
-            line-height: 1;
             margin: 10px 0;
         }
 
@@ -142,8 +169,19 @@
 <body>
 
 <header>
+    <div class="fishing-animation">
+        <svg width="200" height="100" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 90L180 20" stroke="#555" stroke-width="4" stroke-linecap="round"/>
+            <g class="reel">
+                <circle cx="35" silver cy="75" r="12" stroke="var(--bright-blue)" stroke-width="3" fill="#222"/>
+                <line x1="35" y1="65" x2="35" y2="85" stroke="var(--bright-blue)" stroke-width="2"/>
+                <line x1="25" y1="75" x2="45" y2="75" stroke="var(--bright-blue)" stroke-width="2"/>
+            </g>
+            <path class="fishing-line" d="M180 20L195 95" stroke="white" stroke-width="1" opacity="0.6"/>
+        </svg>
+    </div>
     <h1>FISHING ARSENAL</h1>
-    <p style="text-transform: uppercase; letter-spacing: 2px; color: var(--bright-blue);">Личный кабинет рыболова</p>
+    <p style="text-transform: uppercase; letter-spacing: 2px; color: var(--bright-blue); margin: 5px 0 0 0;">Твой личный центр управления</p>
 </header>
 
 <div class="container">
@@ -156,8 +194,8 @@
     </div>
 
     <div class="sidebar">
-        <h3>Планирование</h3>
-        <p>СЛЕДУЮЩИЙ ВЫЕЗД: <b>04.03.2026</b></p>
+        <h3 style="font-family: 'Oswald'; text-transform: uppercase;">Планирование</h3>
+        <p>БЛИЖАЙШИЙ ВЫЕЗД: <b>04.03.2026</b></p>
         <div class="vote-section">
             <p>ГОТОВНОСТЬ ГРУППЫ:</p>
             <div id="counter">0</div>
