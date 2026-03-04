@@ -4,42 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fishing Club Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --black-bg: #121212; /* Глубокий черный */
-            --card-bg: #1e1e1e;  /* Темно-серый для карточек */
-            --bright-blue: #00d2ff; /* Яркий голубой */
-            --neon-cyan: #3aedff;   /* Неоновый бирюзовый */
-            --deep-ocean: #0077be;  /* Насыщенный синий */
+            --black-bg: #0a0a0a; 
+            --card-bg: #161616;  
+            --bright-blue: #00d2ff; 
+            --neon-cyan: #3aedff;   
+            --deep-ocean: #0077be;  
             --text-white: #ffffff;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Основной текст — сжатый и строгий */
+            font-family: 'Roboto Condensed', sans-serif;
             background-color: var(--black-bg);
             color: var(--text-white);
             margin: 0;
             padding: 0;
+            letter-spacing: 0.5px;
         }
 
         header {
-            background: linear-gradient(135deg, #004e92, #000428); /* Глубокий градиент */
-            border-bottom: 2px solid var(--bright-blue);
-            color: white;
-            padding: 3rem 1rem;
+            background: linear-gradient(180deg, #001f3f 0%, var(--black-bg) 100%);
+            border-bottom: 3px solid var(--bright-blue);
+            padding: 4rem 1rem;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.2);
         }
 
         header h1 {
-            font-size: 2.5rem;
-            text-shadow: 0 0 15px var(--bright-blue);
+            /* Заголовок — острый и массивный */
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            font-weight: 700;
             margin: 0;
+            letter-spacing: 4px;
+            text-shadow: 2px 2px 0px var(--deep-ocean), 0 0 20px rgba(0, 210, 255, 0.4);
         }
 
         .container {
             max-width: 1100px;
-            margin: 40px auto;
+            margin: -30px auto 40px; /* Немного «наезжаем» на шапку */
             padding: 0 20px;
             display: grid;
             grid-template-columns: 1fr 350px;
@@ -54,107 +60,109 @@
 
         .card {
             background: var(--card-bg);
-            border: 1px solid #333;
-            border-top: 4px solid var(--neon-cyan); /* Яркая полоса сверху */
+            border: 1px solid #222;
             padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border-radius: 0; /* Делаем углы острыми */
+            border-left: 4px solid var(--bright-blue);
+            text-align: left; /* Строгий стиль */
+            transition: 0.3s ease;
             cursor: pointer;
         }
 
         .card:hover { 
-            transform: scale(1.05);
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 25px rgba(58, 237, 255, 0.3);
-            background: #252525;
+            background: #202020;
+            border-left: 8px solid var(--neon-cyan);
+            transform: translateX(10px);
         }
 
         .card h3 { 
-            color: var(--neon-cyan); 
+            font-family: 'Oswald', sans-serif;
+            color: var(--bright-blue); 
             margin-top: 0;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
-
-        .card p { color: #bbb; }
 
         .sidebar {
             background: var(--card-bg);
             padding: 30px;
-            border-radius: 20px;
-            border: 1px solid #333;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-radius: 0;
+            border: 1px solid #222;
+            border-top: 5px solid var(--bright-blue);
             height: fit-content;
+        }
+
+        .sidebar h3 {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .vote-section {
             text-align: center;
-            background: #2a2a2a;
+            background: #000;
             padding: 25px;
-            border-radius: 15px;
-            border: 1px dashed var(--bright-blue);
+            border: 1px solid #333;
             margin-top: 20px;
         }
 
         button {
-            background: linear-gradient(90deg, var(--deep-ocean), var(--bright-blue));
-            color: white;
+            font-family: 'Oswald', sans-serif;
+            background: var(--bright-blue);
+            color: #000; /* Черный текст на ярком фоне для контраста */
             border: none;
-            padding: 16px;
-            border-radius: 40px;
-            cursor: pointer;
-            font-weight: bold;
+            padding: 15px;
+            text-transform: uppercase;
+            font-weight: 700;
             font-size: 1.2rem;
-            transition: 0.3s;
+            cursor: pointer;
             width: 100%;
-            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.3);
+            transition: 0.2s;
         }
 
         button:hover { 
-            filter: brightness(1.2);
-            box-shadow: 0 0 30px rgba(0, 210, 255, 0.5);
+            background: var(--white);
+            background: var(--neon-cyan);
+            box-shadow: 0 0 20px var(--bright-blue);
         }
 
         #counter { 
-            font-size: 3rem; 
-            color: var(--bright-blue); 
-            font-weight: bold; 
-            margin: 15px 0;
-            text-shadow: 0 0 10px rgba(0, 210, 255, 0.6);
+            font-family: 'Oswald', sans-serif;
+            font-size: 4rem; 
+            color: var(--text-white);
+            line-height: 1;
+            margin: 10px 0;
         }
 
         @media (max-width: 850px) {
-            .container { grid-template-columns: 1fr; }
+            .container { grid-template-columns: 1fr; margin-top: 20px; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>🎣 FISHING CLUB PREMIER</h1>
-    <p>Личный онлайн-центр управления рыбалкой</p>
+    <h1>FISHING ARSENAL</h1>
+    <p style="text-transform: uppercase; letter-spacing: 2px; color: var(--bright-blue);">Личный кабинет рыболова</p>
 </header>
 
 <div class="container">
     <div class="main-content">
-        <div class="card"><h3>Карп</h3><p>Трофеи и прикормки</p></div>
-        <div class="card"><h3>Спиннинг</h3><p>Джиг, твичинг, блесны</p></div>
-        <div class="card"><h3>Зима</h3><p>Мормышка и балансиры</p></div>
-        <div class="card"><h3>Фидер</h3><p>Реки и водохранилища</p></div>
-        <div class="card" style="grid-column: span 2;"><h3>Справочник снастей</h3><p>Инвентаризация арсенала</p></div>
+        <div class="card"><h3>Карп</h3><p>Трофеи и локации</p></div>
+        <div class="card"><h3>Спиннинг</h3><p>Хищник и снасти</p></div>
+        <div class="card"><h3>Зима</h3><p>Лед и тактика</p></div>
+        <div class="card"><h3>Фидер</h3><p>Прикормки и точки</p></div>
+        <div class="card" style="grid-column: span 2;"><h3>Справочник</h3><p>Полный список снаряжения</p></div>
     </div>
 
     <div class="sidebar">
-        <h3 style="color: var(--bright-blue)">Планирование</h3>
-        <p>Следующий выезд: <b>Март 2026</b></p>
+        <h3>Планирование</h3>
+        <p>СЛЕДУЮЩИЙ ВЫЕЗД: <b>04.03.2026</b></p>
         <div class="vote-section">
-            <p>Кто в деле?</p>
+            <p>ГОТОВНОСТЬ ГРУППЫ:</p>
             <div id="counter">0</div>
-            <p>рыбаков</p>
-            <button onclick="castVote()">Я ЕДУ! 🎣</button>
+            <p>УЧАСТНИКОВ</p>
+            <button onclick="castVote()">ПОДТВЕРДИТЬ УЧАСТИЕ</button>
         </div>
     </div>
 </div>
