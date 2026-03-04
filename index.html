@@ -3,216 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fishing Arsenal 3D</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <title>Fishing Arsenal 3D Fix</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         :root {
             --black-bg: #050505; 
-            --card-bg: #111111;  
             --bright-blue: #00d2ff; 
             --neon-cyan: #3aedff;   
-            --text-white: #ffffff;
         }
 
         body {
-            font-family: 'Roboto Condensed', sans-serif;
+            font-family: Arial, sans-serif;
             background-color: var(--black-bg);
-            color: var(--text-white);
+            color: white;
             margin: 0;
-            padding: 0;
             overflow-x: hidden;
         }
 
-        /* --- 3D КОНТЕЙНЕР ШАПКИ --- */
+        /* Контейнер для 3D */
         #header-3d {
             width: 100%;
-            height: 450px;
-            background: radial-gradient(circle at center, #001f3f 0%, #050505 100%);
+            height: 400px;
             position: relative;
+            background: black;
             border-bottom: 2px solid var(--bright-blue);
+            cursor: pointer;
         }
 
-        #canvas-container {
-            width: 100%;
-            height: 100%;
-        }
-
-        .header-overlay {
+        /* Текстовый слой (если 3D не подгрузится, будет запасной вариант) */
+        .title-backup {
             position: absolute;
-            bottom: 20px;
-            width: 100%;
-            text-align: center;
-            pointer-events: none;
-        }
-
-        .header-overlay p {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             font-family: 'Oswald';
-            text-transform: uppercase;
-            letter-spacing: 5px;
+            font-size: 4rem;
             color: var(--bright-blue);
-            animation: pulse 2s infinite;
+            text-shadow: 0 0 20px var(--bright-blue);
+            pointer-events: none;
+            display: none; /* Включаем, если Three.js упадет */
         }
 
-        @keyframes pulse {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.5; }
-        }
-
-        /* --- КОНТЕНТ --- */
         .container {
             max-width: 1100px;
             margin: 40px auto;
             padding: 0 20px;
             display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 30px;
-        }
-
-        .main-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
+            grid-template-columns: 1fr 300px;
+            gap: 25px;
         }
 
         .card {
-            background: var(--card-bg);
-            border: 1px solid #222;
-            padding: 30px;
+            background: #111;
+            padding: 25px;
             border-left: 4px solid var(--bright-blue);
-            transition: 0.3s ease;
-            cursor: pointer;
-        }
-
-        .card:hover { 
-            background: #1a1a1a;
-            border-left: 10px solid var(--neon-cyan);
-            transform: scale(1.02);
-        }
-
-        .card h3 { 
-            font-family: 'Oswald', sans-serif;
-            color: var(--bright-blue); 
-            margin: 0 0 10px 0;
+            margin-bottom: 15px;
+            font-family: 'Oswald';
             text-transform: uppercase;
-        }
-
-        .sidebar {
-            background: var(--card-bg);
-            padding: 30px;
-            border-top: 5px solid var(--bright-blue);
         }
 
         button {
-            font-family: 'Oswald';
-            background: var(--bright-blue);
-            color: #000;
-            border: none;
-            padding: 15px;
-            text-transform: uppercase;
-            font-weight: 700;
             width: 100%;
+            padding: 15px;
+            background: var(--bright-blue);
+            border: none;
+            font-family: 'Oswald';
+            font-weight: bold;
             cursor: pointer;
         }
-
-        #counter { font-family: 'Oswald'; font-size: 4rem; text-align: center; margin: 10px 0; }
     </style>
 </head>
 <body>
 
-<div id="header-3d">
-    <div id="canvas-container"></div>
-    <div class="header-overlay">
-        <p>Нажми на экран, чтобы подсечь!</p>
-    </div>
+<div id="header-3d" onclick="hook()">
+    <div class="title-backup" id="backup">FISHING ARSENAL</div>
 </div>
 
 <div class="container">
     <div class="main-content">
-        <div class="card"><h3>Карп</h3><p>Трофеи и локации</p></div>
-        <div class="card"><h3>Спиннинг</h3><p>Хищник и снасти</p></div>
-        <div class="card"><h3>Зима</h3><p>Лед и тактика</p></div>
-        <div class="card"><h3>Фидер</h3><p>Прикормки и точки</p></div>
-        <div class="card" style="grid-column: span 2;"><h3>Справочник</h3><p>Полный список снаряжения</p></div>
+        <div class="card">Карповая рыбалка</div>
+        <div class="card">Спиннинг</div>
+        <div class="card">Зимняя рыбалка</div>
+        <div class="card">Фидерная рыбалка</div>
+        <div class="card">Справочник снастей</div>
     </div>
-
     <div class="sidebar">
-        <h3>ПЛАНИРОВАНИЕ</h3>
-        <div id="counter">0</div>
-        <button onclick="castVote()">ПОДТВЕРДИТЬ УЧАСТИЕ</button>
+        <div class="card" style="text-align: center;">
+            <div id="counter" style="font-size: 3rem;">0</div>
+            <p>УЧАСТНИКОВ</p>
+            <button onclick="castVote()">Я ЕДУ!</button>
+        </div>
     </div>
 </div>
 
-<script type="module">
-    // --- 3D ЛОГИКА ---
-    const container = document.getElementById('canvas-container');
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    container.appendChild(renderer.domElement);
+<script>
+    // --- ИСПРАВЛЕННЫЙ 3D СКРИПТ ---
+    let scene, camera, renderer, rod, line, textMesh;
+    let isHooked = false;
 
-    // Освещение
-    const light = new THREE.PointLight(0x00d2ff, 1, 100);
-    light.position.set(0, 10, 10);
-    scene.add(light);
-    scene.add(new THREE.AmbientLight(0x404040));
+    function init() {
+        const container = document.getElementById('header-3d');
+        scene = new THREE.Scene();
+        
+        camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.set(0, 2, 10);
 
-    // Создаем "Удочку" (простой цилиндр под углом)
-    const rodGeometry = new THREE.CylinderGeometry(0.2, 0.5, 15, 32);
-    const rodMaterial = new THREE.MeshStandardMaterial({ color: 0x222222 });
-    const rod = new THREE.Mesh(rodGeometry, rodMaterial);
-    rod.rotation.z = Math.PI / 4;
-    rod.position.set(-5, -2, 0);
-    scene.add(rod);
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
 
-    // Создаем "Текст" (как спрайт, чтобы вылетал)
-    const loader = new THREE.FontLoader();
-    // Мы используем упрощенный метод через Canvas для текста, чтобы не грузить тяжелые шрифты
-    function createTextTexture() {
+        // Свет
+        const light = new THREE.PointLight(0x00d2ff, 1.5, 100);
+        light.position.set(5, 5, 5);
+        scene.add(light);
+        scene.add(new THREE.AmbientLight(0x404040));
+
+        // Удочка
+        const rodGeo = new THREE.CylinderGeometry(0.05, 0.15, 12, 12);
+        const rodMat = new THREE.MeshStandardMaterial({ color: 0x222222 });
+        rod = new THREE.Mesh(rodGeo, rodMat);
+        rod.rotation.z = Math.PI / 3;
+        rod.position.set(-6, 0, 0);
+        scene.add(rod);
+
+        // Леска
+        const lineMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
+        const points = [new THREE.Vector3(-3, 4.5, 0), new THREE.Vector3(0, -10, 0)];
+        const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
+        line = new THREE.Line(lineGeo, lineMat);
+        scene.add(line);
+
+        // Текст (через Sprite для надежности)
         const canvas = document.createElement('canvas');
-        canvas.width = 1024; canvas.height = 256;
         const ctx = canvas.getContext('2d');
+        canvas.width = 1024; canvas.height = 256;
         ctx.fillStyle = '#00d2ff';
-        ctx.font = 'Bold 120px Oswald';
+        ctx.font = 'bold 100px Oswald';
         ctx.textAlign = 'center';
-        ctx.shadowBlur = 20;
+        ctx.shadowBlur = 15;
         ctx.shadowColor = '#00d2ff';
         ctx.fillText('FISHING ARSENAL', 512, 150);
-        return new THREE.CanvasTexture(canvas);
+        
+        const texture = new THREE.CanvasTexture(canvas);
+        const spriteMat = new THREE.SpriteMaterial({ map: texture });
+        textMesh = new THREE.Sprite(spriteMat);
+        textMesh.scale.set(12, 3, 1);
+        textMesh.position.set(0, -8, 0); // Скрыт внизу
+        scene.add(textMesh);
+
+        animate();
     }
 
-    const textGeo = new THREE.PlaneGeometry(10, 2.5);
-    const textMat = new THREE.MeshBasicMaterial({ map: createTextTexture(), transparent: true, opacity: 0 });
-    const textMesh = new THREE.Mesh(textGeo, textMat);
-    textMesh.position.set(5, -10, 2); // Спрятан внизу
-    scene.add(textMesh);
-
-    camera.position.z = 12;
-
-    // Анимация вытягивания
-    let time = 0;
     function animate() {
         requestAnimationFrame(animate);
-        time += 0.02;
-
-        // Покачивание удочки
-        rod.rotation.x = Math.sin(time) * 0.05;
         
-        // Появление текста (вылетает снизу)
-        if (textMesh.position.y < 2) {
-            textMesh.position.y += 0.1;
-            textMesh.opacity = Math.min(textMat.opacity + 0.01, 1);
-            textMat.opacity = textMesh.opacity;
+        if (isHooked && textMesh.position.y < 1) {
+            // Анимация подсечки
+            rod.rotation.z += (Math.PI/6 - rod.rotation.z) * 0.1;
+            textMesh.position.y += 0.2;
+            
+            // Обновление лески
+            const positions = line.geometry.attributes.position.array;
+            positions[3] = textMesh.position.x;
+            positions[4] = textMesh.position.y + 0.5;
+            line.geometry.attributes.position.needsUpdate = true;
+        } else if (!isHooked) {
+            rod.rotation.x = Math.sin(Date.now() * 0.001) * 0.1;
         }
 
         renderer.render(scene, camera);
     }
-    animate();
 
-    // Обработка изменения размера окна
+    // Функция "Подсечки" при клике на шапку
+    window.hook = function() {
+        isHooked = true;
+    }
+
+    init();
+
+    // Ресайз
     window.addEventListener('resize', () => {
+        const container = document.getElementById('header-3d');
         camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(container.clientWidth, container.clientHeight);
