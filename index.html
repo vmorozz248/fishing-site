@@ -9,7 +9,7 @@
             --deep-blue: #005b96;
             --ocean-blue: #00a8cc;
             --sky-blue: #2ad1ff;
-            --light-bg: #f0faff;
+            --light-bg: #e9ecef; /* Тот самый светло-серый фон */
             --white: #ffffff;
         }
 
@@ -24,86 +24,107 @@
         header {
             background: linear-gradient(135deg, var(--deep-blue), var(--ocean-blue));
             color: white;
-            padding: 2rem;
+            padding: 2.5rem 1rem;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
 
         .container {
-            max-width: 1000px;
-            margin: 20px auto;
-            padding: 0 15px;
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
             display: grid;
             grid-template-columns: 1fr 350px;
-            gap: 20px;
+            gap: 25px;
         }
 
         .main-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
         }
 
         .card {
             background: var(--white);
-            border-bottom: 4px solid var(--ocean-blue);
-            padding: 20px;
-            border-radius: 12px;
+            border-bottom: 5px solid var(--ocean-blue);
+            padding: 25px;
+            border-radius: 15px;
             text-align: center;
-            transition: 0.3s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            cursor: pointer;
         }
 
-        .card:hover { transform: translateY(-5px); background: #e1f5fe; }
-        .card h3 { color: var(--deep-blue); margin-top: 0; }
+        .card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            background: #f8fdff;
+        }
+
+        .card h3 { 
+            color: var(--deep-blue); 
+            margin-top: 0;
+            font-size: 1.4rem;
+        }
 
         .sidebar {
             background: var(--white);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
             height: fit-content;
         }
 
         .vote-section {
             text-align: center;
-            background: var(--light-bg);
-            padding: 15px;
-            border-radius: 8px;
+            background: #f1f3f5;
+            padding: 20px;
+            border-radius: 10px;
             border: 1px solid var(--sky-blue);
+            margin-top: 15px;
         }
 
         button {
             background: var(--ocean-blue);
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
+            padding: 14px 30px;
+            border-radius: 30px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 1rem;
-            transition: 0.2s;
+            font-size: 1.1rem;
+            transition: background 0.3s ease;
+            width: 100%;
         }
 
         button:hover { background: var(--deep-blue); }
 
-        #counter { font-size: 2rem; color: var(--deep-blue); font-weight: bold; }
+        #counter { 
+            font-size: 2.5rem; 
+            color: var(--deep-blue); 
+            font-weight: bold; 
+            margin: 10px 0;
+        }
+
+        @media (max-width: 850px) {
+            .container { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
 <header>
     <h1>🎣 Личный Рыболовный Клуб</h1>
-    <p>Планирование и справочник снастей</p>
+    <p>Твой онлайн-дневник и планировщик поездок</p>
 </header>
 
 <div class="container">
     <div class="main-content">
-        <div class="card"><h3>Carp Fishing</h3><p>Карповая рыбалка</p></div>
-        <div class="card"><h3>Spinning</h3><p>Спиннинг</p></div>
-        <div class="card"><h3>Winter</h3><p>Зимняя рыбалка</p></div>
-        <div class="card"><h3>Feeder</h3><p>Фидер</p></div>
-        <div class="card" style="grid-column: span 2;"><h3>Справочник снастей</h3><p>Твой инвентарь здесь</p></div>
+        <div class="card"><h3>Карповая рыбалка</h3><p>Отчеты и точки</p></div>
+        <div class="card"><h3>Спиннинг</h3><p>Хищник и приманки</p></div>
+        <div class="card"><h3>Зимняя рыбалка</h3><p>Лед и снасти</p></div>
+        <div class="card"><h3>Фидер</h3><p>Кормушки и дистанции</p></div>
+        <div class="card" style="grid-column: span 2;"><h3>Справочник снастей</h3><p>Весь твой инвентарь</p></div>
     </div>
 
     <div class="sidebar">
@@ -113,7 +134,7 @@
             <p>Кто едет с нами?</p>
             <div id="counter">0</div>
             <p>участников</p>
-            <button onclick="castVote()">Я еду! 🙋‍♂️</button>
+            <button onclick="castVote()">Я еду! 🙋‍♀️</button>
         </div>
     </div>
 </div>
@@ -122,7 +143,6 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
   import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-  // Твои ключи из скриншота
   const firebaseConfig = {
     apiKey: "AIzaSyAnDm7gHUkmtTb7xgcfpVgaxYLalfFqqwU",
     authDomain: "fishing-site-dd71b.firebaseapp.com",
@@ -136,14 +156,12 @@
   const db = getFirestore(app);
   const voteDoc = doc(db, "siteData", "votes");
 
-  // Слушаем изменения в базе в реальном времени
   onSnapshot(voteDoc, (docSnap) => {
     if (docSnap.exists()) {
       document.getElementById('counter').innerText = docSnap.data().count;
     }
   });
 
-  // Функция голосования
   window.castVote = async function() {
     const docSnap = await getDoc(voteDoc);
     let currentCount = docSnap.exists() ? docSnap.data().count : 0;
