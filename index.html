@@ -2,86 +2,68 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Fishing Club - Личный кабинет</title>
+    <title>Fishing Planner</title>
     <style>
         :root {
-            --dark-blue: #005b96;
+            --dark-blue: #005b96; /* Из твоей палитры */
             --ocean-blue: #00a8cc;
             --sky-blue: #2ad1ff;
-            --light-blue: #b3e5fc;
-            --white: #f0faff;
+            --light-bg: #e1f5fe;
         }
+        body { font-family: sans-serif; background: var(--light-bg); margin: 0; padding: 20px; }
+        header { background: var(--dark-blue); color: white; padding: 15px; border-radius: 10px; text-align: center; }
+        
+        .container { display: grid; grid-template-columns: 1fr 300px; gap: 20px; margin-top: 20px; }
+        
+        .section { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        
+        /* Календарь-заглушка */
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; }
+        .day { padding: 10px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; }
+        .day:hover { background: var(--sky-blue); }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--white);
-            color: #333;
-            margin: 0;
-            padding: 20px;
-        }
-
-        header {
-            background-color: var(--dark-blue);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        nav {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .card {
-            background: white;
-            border-left: 5px solid var(--ocean-blue);
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: 0.3s;
-            cursor: pointer;
-        }
-
-        .card:hover {
-            background: var(--light-blue);
-            transform: translateY(-3px);
-        }
-
-        .card h3 {
-            margin-top: 0;
-            color: var(--dark-blue);
-        }
-
-        .status {
-            font-size: 0.8em;
-            color: green;
-            text-align: right;
-        }
+        /* Голосование */
+        .vote-btn { background: var(--ocean-blue); color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; width: 100%; }
+        .vote-count { font-weight: bold; color: var(--dark-blue); }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Рыболовный Дневник</h1>
-    <p id="save-status">● Данные сохранены (автоматически)</p>
+    <h1>🎣 Мой Рыболовный Планировщик</h1>
 </header>
 
-<nav>
-    <div class="card"><h3>Карповая рыбалка</h3><p>Локации и отчеты</p></div>
-    <div class="card"><h3>Спиннинговая</h3><p>Хищник и приманки</p></div>
-    <div class="card"><h3>Зимняя рыбалка</h3><p>Лед и снасти</p></div>
-    <div class="card"><h3>Фидерная</h3><p>Кормушки и дистанции</p></div>
-    <div class="card"><h3>Справочник снастей</h3><p>Инвентарь</p></div>
-    <div class="card"><h3>Фотогалерея</h3><p>Места славы</p></div>
-    <div class="card"><h3>Календарь / План</h3><p>Ближайшие выезды</p></div>
-</nav>
+<div class="container">
+    <div class="section">
+        <h3>Календарь поездок</h3>
+        <p>Выберите дату для планирования:</p>
+        <div class="calendar-grid" id="calendar">
+            <div class="day">1</div><div class="day">2</div><div class="day">3</div>
+            <div class="day" style="background: #ffecb3;">4 🐟</div><div class="day">5</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h3>Кто едет?</h3>
+        <p>Следующий выезд: 15 марта</p>
+        <div id="voting">
+            <button class="vote-btn" onclick="addVote()">Я еду! 🙋‍♂️</button>
+            <p>Участников: <span class="vote-count" id="count">0</span></p>
+        </div>
+    </div>
+</div>
 
 <script>
-    // Базовая логика автосохранения в локальное хранилище браузера
-    console.log("Система автосохранения активна...");
+    // Простая логика голосования с автосохранением в браузере
+    let votes = localStorage.getItem('fishingVotes') || 0;
+    document.getElementById('count').innerText = votes;
+
+    function addVote() {
+        votes++;
+        localStorage.setItem('fishingVotes', votes);
+        document.getElementById('count').innerText = votes;
+        alert('Ваш голос учтен!');
+    }
 </script>
 
 </body>
