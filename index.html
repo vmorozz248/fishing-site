@@ -3,193 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fishing Arsenal 3D Fix</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <title>Fishing Arsenal | Premier</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --black-bg: #050505; 
+            --card-bg: #111111;  
             --bright-blue: #00d2ff; 
             --neon-cyan: #3aedff;   
+            --deep-blue: #005b96;
+            --text-white: #ffffff;
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto Condensed', sans-serif;
             background-color: var(--black-bg);
-            color: white;
+            color: var(--text-white);
             margin: 0;
-            overflow-x: hidden;
+            padding: 0;
+            letter-spacing: 0.5px;
         }
 
-        /* Контейнер для 3D */
-        #header-3d {
-            width: 100%;
-            height: 400px;
+        /* --- СТИЛЬНАЯ СТАТИЧНАЯ ШАПКА --- */
+        header {
+            background: linear-gradient(180deg, #001a33 0%, var(--black-bg) 100%);
+            border-bottom: 3px solid var(--bright-blue);
+            padding: 5rem 1rem;
+            text-align: center;
             position: relative;
-            background: black;
-            border-bottom: 2px solid var(--bright-blue);
-            cursor: pointer;
         }
 
-        /* Текстовый слой (если 3D не подгрузится, будет запасной вариант) */
-        .title-backup {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-family: 'Oswald';
-            font-size: 4rem;
+        header h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 4.5rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 6px;
+            color: var(--text-white);
+            text-shadow: 0 0 20px rgba(0, 210, 255, 0.7);
+        }
+
+        header p {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 4px;
             color: var(--bright-blue);
-            text-shadow: 0 0 20px var(--bright-blue);
-            pointer-events: none;
-            display: none; /* Включаем, если Three.js упадет */
+            margin-top: 10px;
+            font-size: 1.1rem;
         }
 
+        /* --- СЕТКА КОНТЕНТА --- */
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 40px auto;
             padding: 0 20px;
             display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 25px;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
         }
 
         .card {
-            background: #111;
-            padding: 25px;
-            border-left: 4px solid var(--bright-blue);
-            margin-bottom: 15px;
-            font-family: 'Oswald';
+            background: var(--card-bg);
+            border: 1px solid #222;
+            padding: 35px;
+            border-left: 5px solid var(--bright-blue);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover { 
+            background: #1a1a1a;
+            border-left: 12px solid var(--neon-cyan);
+            transform: translateX(10px);
+            box-shadow: -10px 0 20px rgba(0, 210, 255, 0.1);
+        }
+
+        .card h3 { 
+            font-family: 'Oswald', sans-serif;
+            color: var(--bright-blue); 
+            margin: 0 0 10px 0;
+            font-size: 1.8rem;
             text-transform: uppercase;
         }
 
+        .card p {
+            color: #888;
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* --- БОКОВАЯ ПАНЕЛЬ --- */
+        .sidebar {
+            background: var(--card-bg);
+            padding: 30px;
+            border: 1px solid #222;
+            border-top: 6px solid var(--bright-blue);
+            height: fit-content;
+        }
+
+        .sidebar h3 {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            margin-top: 0;
+            letter-spacing: 2px;
+        }
+
+        .vote-section {
+            text-align: center;
+            background: #000;
+            padding: 25px;
+            border: 1px solid #333;
+            margin-top: 20px;
+        }
+
+        #counter { 
+            font-family: 'Oswald', sans-serif;
+            font-size: 4.5rem; 
+            color: var(--text-white);
+            line-height: 1;
+            margin: 15px 0;
+            text-shadow: 0 0 15px var(--bright-blue);
+        }
+
         button {
-            width: 100%;
-            padding: 15px;
+            font-family: 'Oswald', sans-serif;
             background: var(--bright-blue);
+            color: #000;
             border: none;
-            font-family: 'Oswald';
-            font-weight: bold;
+            padding: 18px;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 1.2rem;
             cursor: pointer;
+            width: 100%;
+            transition: 0.2s;
+            letter-spacing: 1px;
+        }
+
+        button:hover { 
+            background: var(--neon-cyan);
+            box-shadow: 0 0 25px var(--bright-blue);
+        }
+
+        /* Адаптив для телефонов */
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+            header h1 { font-size: 3rem; }
         }
     </style>
 </head>
 <body>
 
-<div id="header-3d" onclick="hook()">
-    <div class="title-backup" id="backup">FISHING ARSENAL</div>
-</div>
+<header>
+    <h1>FISHING ARSENAL</h1>
+    <p>Professional Fishing Management System</p>
+</header>
 
 <div class="container">
     <div class="main-content">
-        <div class="card">Карповая рыбалка</div>
-        <div class="card">Спиннинг</div>
-        <div class="card">Зимняя рыбалка</div>
-        <div class="card">Фидерная рыбалка</div>
-        <div class="card">Справочник снастей</div>
+        <div class="card"><h3>Карп</h3><p>Мониторинг трофеев и точек</p></div>
+        <div class="card"><h3>Спиннинг</h3><p>Хищник, приманки, тесты</p></div>
+        <div class="card"><h3>Зима</h3><p>Тактика подледного лова</p></div>
+        <div class="card"><h3>Фидер</h3><p>Дистанции и составы смесей</p></div>
+        <div class="card" style="grid-column: span 2;">
+            <h3>Справочник снастей</h3>
+            <p>Полная инвентаризация вашего снаряжения</p>
+        </div>
     </div>
+
     <div class="sidebar">
-        <div class="card" style="text-align: center;">
-            <div id="counter" style="font-size: 3rem;">0</div>
-            <p>УЧАСТНИКОВ</p>
-            <button onclick="castVote()">Я ЕДУ!</button>
+        <h3>ПЛАНИРОВАНИЕ</h3>
+        <p>БЛИЖАЙШИЙ ВЫЕЗД: <span style="color: var(--neon-cyan)">04.03.2026</span></p>
+        <div class="vote-section">
+            <p style="margin: 0; font-size: 0.9rem; color: #666;">ПОДТВЕРЖДЕНО УЧАСТИЕ:</p>
+            <div id="counter">0</div>
+            <p style="margin-bottom: 20px;">РЫБОЛОВОВ</p>
+            <button onclick="castVote()">ПОДТВЕРДИТЬ ВЫЕЗД</button>
         </div>
     </div>
 </div>
-
-<script>
-    // --- ИСПРАВЛЕННЫЙ 3D СКРИПТ ---
-    let scene, camera, renderer, rod, line, textMesh;
-    let isHooked = false;
-
-    function init() {
-        const container = document.getElementById('header-3d');
-        scene = new THREE.Scene();
-        
-        camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
-        camera.position.set(0, 2, 10);
-
-        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(container.clientWidth, container.clientHeight);
-        container.appendChild(renderer.domElement);
-
-        // Свет
-        const light = new THREE.PointLight(0x00d2ff, 1.5, 100);
-        light.position.set(5, 5, 5);
-        scene.add(light);
-        scene.add(new THREE.AmbientLight(0x404040));
-
-        // Удочка
-        const rodGeo = new THREE.CylinderGeometry(0.05, 0.15, 12, 12);
-        const rodMat = new THREE.MeshStandardMaterial({ color: 0x222222 });
-        rod = new THREE.Mesh(rodGeo, rodMat);
-        rod.rotation.z = Math.PI / 3;
-        rod.position.set(-6, 0, 0);
-        scene.add(rod);
-
-        // Леска
-        const lineMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
-        const points = [new THREE.Vector3(-3, 4.5, 0), new THREE.Vector3(0, -10, 0)];
-        const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
-        line = new THREE.Line(lineGeo, lineMat);
-        scene.add(line);
-
-        // Текст (через Sprite для надежности)
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = 1024; canvas.height = 256;
-        ctx.fillStyle = '#00d2ff';
-        ctx.font = 'bold 100px Oswald';
-        ctx.textAlign = 'center';
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = '#00d2ff';
-        ctx.fillText('FISHING ARSENAL', 512, 150);
-        
-        const texture = new THREE.CanvasTexture(canvas);
-        const spriteMat = new THREE.SpriteMaterial({ map: texture });
-        textMesh = new THREE.Sprite(spriteMat);
-        textMesh.scale.set(12, 3, 1);
-        textMesh.position.set(0, -8, 0); // Скрыт внизу
-        scene.add(textMesh);
-
-        animate();
-    }
-
-    function animate() {
-        requestAnimationFrame(animate);
-        
-        if (isHooked && textMesh.position.y < 1) {
-            // Анимация подсечки
-            rod.rotation.z += (Math.PI/6 - rod.rotation.z) * 0.1;
-            textMesh.position.y += 0.2;
-            
-            // Обновление лески
-            const positions = line.geometry.attributes.position.array;
-            positions[3] = textMesh.position.x;
-            positions[4] = textMesh.position.y + 0.5;
-            line.geometry.attributes.position.needsUpdate = true;
-        } else if (!isHooked) {
-            rod.rotation.x = Math.sin(Date.now() * 0.001) * 0.1;
-        }
-
-        renderer.render(scene, camera);
-    }
-
-    // Функция "Подсечки" при клике на шапку
-    window.hook = function() {
-        isHooked = true;
-    }
-
-    init();
-
-    // Ресайз
-    window.addEventListener('resize', () => {
-        const container = document.getElementById('header-3d');
-        camera.aspect = container.clientWidth / container.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
-    });
-</script>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
