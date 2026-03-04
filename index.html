@@ -3,39 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fishing Club Online</title>
+    <title>Fishing Club Premium</title>
     <style>
         :root {
-            --deep-blue: #005b96;
-            --ocean-blue: #00a8cc;
-            --sky-blue: #2ad1ff;
-            --light-bg: #e9ecef; /* Тот самый светло-серый фон */
-            --white: #ffffff;
+            --black-bg: #121212; /* Глубокий черный */
+            --card-bg: #1e1e1e;  /* Темно-серый для карточек */
+            --bright-blue: #00d2ff; /* Яркий голубой */
+            --neon-cyan: #3aedff;   /* Неоновый бирюзовый */
+            --deep-ocean: #0077be;  /* Насыщенный синий */
+            --text-white: #ffffff;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--light-bg);
-            color: #333;
+            background-color: var(--black-bg);
+            color: var(--text-white);
             margin: 0;
             padding: 0;
         }
 
         header {
-            background: linear-gradient(135deg, var(--deep-blue), var(--ocean-blue));
+            background: linear-gradient(135deg, #004e92, #000428); /* Глубокий градиент */
+            border-bottom: 2px solid var(--bright-blue);
             color: white;
-            padding: 2.5rem 1rem;
+            padding: 3rem 1rem;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            text-shadow: 0 0 15px var(--bright-blue);
+            margin: 0;
         }
 
         .container {
             max-width: 1100px;
-            margin: 30px auto;
+            margin: 40px auto;
             padding: 0 20px;
             display: grid;
             grid-template-columns: 1fr 350px;
-            gap: 25px;
+            gap: 30px;
         }
 
         .main-content {
@@ -45,65 +53,77 @@
         }
 
         .card {
-            background: var(--white);
-            border-bottom: 5px solid var(--ocean-blue);
-            padding: 25px;
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-top: 4px solid var(--neon-cyan); /* Яркая полоса сверху */
+            padding: 30px;
             border-radius: 15px;
             text-align: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             cursor: pointer;
         }
 
         .card:hover { 
-            transform: translateY(-8px); 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            background: #f8fdff;
+            transform: scale(1.05);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 25px rgba(58, 237, 255, 0.3);
+            background: #252525;
         }
 
         .card h3 { 
-            color: var(--deep-blue); 
+            color: var(--neon-cyan); 
             margin-top: 0;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
+        .card p { color: #bbb; }
+
         .sidebar {
-            background: var(--white);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             height: fit-content;
         }
 
         .vote-section {
             text-align: center;
-            background: #f1f3f5;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid var(--sky-blue);
-            margin-top: 15px;
+            background: #2a2a2a;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px dashed var(--bright-blue);
+            margin-top: 20px;
         }
 
         button {
-            background: var(--ocean-blue);
+            background: linear-gradient(90deg, var(--deep-ocean), var(--bright-blue));
             color: white;
             border: none;
-            padding: 14px 30px;
-            border-radius: 30px;
+            padding: 16px;
+            border-radius: 40px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 1.1rem;
-            transition: background 0.3s ease;
+            font-size: 1.2rem;
+            transition: 0.3s;
             width: 100%;
+            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.3);
         }
 
-        button:hover { background: var(--deep-blue); }
+        button:hover { 
+            filter: brightness(1.2);
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.5);
+        }
 
         #counter { 
-            font-size: 2.5rem; 
-            color: var(--deep-blue); 
+            font-size: 3rem; 
+            color: var(--bright-blue); 
             font-weight: bold; 
-            margin: 10px 0;
+            margin: 15px 0;
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.6);
         }
 
         @media (max-width: 850px) {
@@ -114,27 +134,27 @@
 <body>
 
 <header>
-    <h1>🎣 Личный Рыболовный Клуб</h1>
-    <p>Твой онлайн-дневник и планировщик поездок</p>
+    <h1>🎣 FISHING CLUB PREMIER</h1>
+    <p>Личный онлайн-центр управления рыбалкой</p>
 </header>
 
 <div class="container">
     <div class="main-content">
-        <div class="card"><h3>Карповая рыбалка</h3><p>Отчеты и точки</p></div>
-        <div class="card"><h3>Спиннинг</h3><p>Хищник и приманки</p></div>
-        <div class="card"><h3>Зимняя рыбалка</h3><p>Лед и снасти</p></div>
-        <div class="card"><h3>Фидер</h3><p>Кормушки и дистанции</p></div>
-        <div class="card" style="grid-column: span 2;"><h3>Справочник снастей</h3><p>Весь твой инвентарь</p></div>
+        <div class="card"><h3>Карп</h3><p>Трофеи и прикормки</p></div>
+        <div class="card"><h3>Спиннинг</h3><p>Джиг, твичинг, блесны</p></div>
+        <div class="card"><h3>Зима</h3><p>Мормышка и балансиры</p></div>
+        <div class="card"><h3>Фидер</h3><p>Реки и водохранилища</p></div>
+        <div class="card" style="grid-column: span 2;"><h3>Справочник снастей</h3><p>Инвентаризация арсенала</p></div>
     </div>
 
     <div class="sidebar">
-        <h3>Планирование</h3>
+        <h3 style="color: var(--bright-blue)">Планирование</h3>
         <p>Следующий выезд: <b>Март 2026</b></p>
         <div class="vote-section">
-            <p>Кто едет с нами?</p>
+            <p>Кто в деле?</p>
             <div id="counter">0</div>
-            <p>участников</p>
-            <button onclick="castVote()">Я еду! 🙋‍♀️</button>
+            <p>рыбаков</p>
+            <button onclick="castVote()">Я ЕДУ! 🎣</button>
         </div>
     </div>
 </div>
