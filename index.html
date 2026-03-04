@@ -3,57 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fishing Arsenal | Premier</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <title>Fishing Arsenal | Professional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --black-bg: #050505; 
             --card-bg: #111111;  
             --bright-blue: #00d2ff; 
             --neon-cyan: #3aedff;   
-            --deep-blue: #005b96;
-            --text-white: #ffffff;
         }
 
         body {
             font-family: 'Roboto Condensed', sans-serif;
             background-color: var(--black-bg);
-            color: var(--text-white);
+            color: white;
             margin: 0;
-            padding: 0;
-            letter-spacing: 0.5px;
+            overflow-x: hidden;
         }
 
-        /* --- СТИЛЬНАЯ СТАТИЧНАЯ ШАПКА --- */
+        /* --- ШАПКА С РЕАЛИСТИЧНОЙ УДОЧКОЙ --- */
         header {
-            background: linear-gradient(180deg, #001a33 0%, var(--black-bg) 100%);
+            height: 450px;
+            background: radial-gradient(circle at 30% 50%, #001a33 0%, var(--black-bg) 100%);
             border-bottom: 3px solid var(--bright-blue);
-            padding: 5rem 1rem;
-            text-align: center;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Сама удочка из твоего файла */
+        .fishing-rod {
+            position: absolute;
+            left: -50px;
+            bottom: -100px;
+            width: 600px; /* Размер подбираем под экран */
+            transform: rotate(-15deg);
+            z-index: 2;
+            filter: drop-shadow(0 0 20px rgba(0,0,0,0.8));
+            animation: rod-vibration 2s infinite ease-in-out;
+            transform-origin: bottom left;
+        }
+
+        /* Текст, который "вытягиваем" */
+        .title-wrap {
+            position: relative;
+            z-index: 3;
+            animation: pull-up 4s forwards cubic-bezier(0.17, 0.67, 0.83, 0.67);
+            text-align: center;
         }
 
         header h1 {
             font-family: 'Oswald', sans-serif;
-            font-size: 4.5rem;
+            font-size: 5rem;
             text-transform: uppercase;
-            font-weight: 700;
             margin: 0;
-            letter-spacing: 6px;
-            color: var(--text-white);
-            text-shadow: 0 0 20px rgba(0, 210, 255, 0.7);
+            letter-spacing: 8px;
+            color: white;
+            text-shadow: 0 0 30px var(--bright-blue);
         }
 
-        header p {
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: var(--bright-blue);
-            margin-top: 10px;
-            font-size: 1.1rem;
+        /* Леска */
+        .fishing-line {
+            position: absolute;
+            top: 50px; /* Точка схода у кончика удочки */
+            left: 450px;
+            width: 2px;
+            height: 1000px;
+            background: rgba(255, 255, 255, 0.3);
+            z-index: 1;
+            transform: rotate(-55deg);
+            transform-origin: top left;
+            box-shadow: 0 0 5px rgba(0, 210, 255, 0.5);
         }
 
-        /* --- СЕТКА КОНТЕНТА --- */
+        /* Анимация вибрации удочки (поклёвка) */
+        @keyframes rod-vibration {
+            0%, 100% { transform: rotate(-15deg); }
+            50% { transform: rotate(-17deg); }
+            70% { transform: rotate(-14deg); }
+        }
+
+        /* Анимация вытягивания названия */
+        @keyframes pull-up {
+            0% { transform: translateY(500px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* --- КОНТЕНТ --- */
         .container {
             max-width: 1200px;
             margin: 40px auto;
@@ -74,121 +112,69 @@
             border: 1px solid #222;
             padding: 35px;
             border-left: 5px solid var(--bright-blue);
-            transition: all 0.3s ease;
+            transition: 0.3s;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
         }
 
         .card:hover { 
             background: #1a1a1a;
             border-left: 12px solid var(--neon-cyan);
-            transform: translateX(10px);
-            box-shadow: -10px 0 20px rgba(0, 210, 255, 0.1);
+            transform: scale(1.02);
         }
 
-        .card h3 { 
-            font-family: 'Oswald', sans-serif;
-            color: var(--bright-blue); 
-            margin: 0 0 10px 0;
-            font-size: 1.8rem;
-            text-transform: uppercase;
-        }
-
-        .card p {
-            color: #888;
-            font-size: 1rem;
-            margin: 0;
-        }
-
-        /* --- БОКОВАЯ ПАНЕЛЬ --- */
         .sidebar {
             background: var(--card-bg);
             padding: 30px;
-            border: 1px solid #222;
             border-top: 6px solid var(--bright-blue);
-            height: fit-content;
-        }
-
-        .sidebar h3 {
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-            margin-top: 0;
-            letter-spacing: 2px;
-        }
-
-        .vote-section {
-            text-align: center;
-            background: #000;
-            padding: 25px;
-            border: 1px solid #333;
-            margin-top: 20px;
-        }
-
-        #counter { 
-            font-family: 'Oswald', sans-serif;
-            font-size: 4.5rem; 
-            color: var(--text-white);
-            line-height: 1;
-            margin: 15px 0;
-            text-shadow: 0 0 15px var(--bright-blue);
         }
 
         button {
-            font-family: 'Oswald', sans-serif;
+            font-family: 'Oswald';
             background: var(--bright-blue);
             color: #000;
             border: none;
             padding: 18px;
             text-transform: uppercase;
-            font-weight: 700;
-            font-size: 1.2rem;
-            cursor: pointer;
+            font-weight: bold;
             width: 100%;
-            transition: 0.2s;
-            letter-spacing: 1px;
+            cursor: pointer;
         }
 
-        button:hover { 
-            background: var(--neon-cyan);
-            box-shadow: 0 0 25px var(--bright-blue);
-        }
+        #counter { font-family: 'Oswald'; font-size: 4.5rem; text-align: center; }
 
-        /* Адаптив для телефонов */
         @media (max-width: 900px) {
             .container { grid-template-columns: 1fr; }
-            header h1 { font-size: 3rem; }
+            .fishing-rod { width: 300px; left: -20px; }
+            header h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>FISHING ARSENAL</h1>
-    <p>Professional Fishing Management System</p>
+    <img src="image_e69e84.png" class="fishing-rod" alt="Fishing Rod">
+    
+    <div class="fishing-line"></div>
+
+    <div class="title-wrap">
+        <h1>FISHING ARSENAL</h1>
+        <p style="font-family: 'Oswald'; color: var(--bright-blue); letter-spacing: 5px;">PREMIUM MANAGEMENT</p>
+    </div>
 </header>
 
 <div class="container">
     <div class="main-content">
-        <div class="card"><h3>Карп</h3><p>Мониторинг трофеев и точек</p></div>
-        <div class="card"><h3>Спиннинг</h3><p>Хищник, приманки, тесты</p></div>
-        <div class="card"><h3>Зима</h3><p>Тактика подледного лова</p></div>
-        <div class="card"><h3>Фидер</h3><p>Дистанции и составы смесей</p></div>
-        <div class="card" style="grid-column: span 2;">
-            <h3>Справочник снастей</h3>
-            <p>Полная инвентаризация вашего снаряжения</p>
-        </div>
+        <div class="card"><h3>Карп</h3><p>Точки и трофеи</p></div>
+        <div class="card"><h3>Спиннинг</h3><p>Хищник и снасти</p></div>
+        <div class="card"><h3>Зима</h3><p>Тактика лова</p></div>
+        <div class="card"><h3>Фидер</h3><p>Дистанции и смеси</p></div>
+        <div class="card" style="grid-column: span 2;"><h3>Справочник</h3><p>Ваш арсенал</p></div>
     </div>
 
     <div class="sidebar">
-        <h3>ПЛАНИРОВАНИЕ</h3>
-        <p>БЛИЖАЙШИЙ ВЫЕЗД: <span style="color: var(--neon-cyan)">04.03.2026</span></p>
-        <div class="vote-section">
-            <p style="margin: 0; font-size: 0.9rem; color: #666;">ПОДТВЕРЖДЕНО УЧАСТИЕ:</p>
-            <div id="counter">0</div>
-            <p style="margin-bottom: 20px;">РЫБОЛОВОВ</p>
-            <button onclick="castVote()">ПОДТВЕРДИТЬ ВЫЕЗД</button>
-        </div>
+        <h3>КТО ЕДЕТ?</h3>
+        <div id="counter">0</div>
+        <button onclick="castVote()">Я В ДЕЛЕ!</button>
     </div>
 </div>
 
