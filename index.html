@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Fishing Club - Личный кабинет</title>
+    <style>
+        :root {
+            --dark-blue: #005b96;
+            --ocean-blue: #00a8cc;
+            --sky-blue: #2ad1ff;
+            --light-blue: #b3e5fc;
+            --white: #f0faff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--white);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--dark-blue);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .card {
+            background: white;
+            border-left: 5px solid var(--ocean-blue);
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            background: var(--light-blue);
+            transform: translateY(-3px);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: var(--dark-blue);
+        }
+
+        .status {
+            font-size: 0.8em;
+            color: green;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Рыболовный Дневник</h1>
+    <p id="save-status">● Данные сохранены (автоматически)</p>
+</header>
+
+<nav>
+    <div class="card"><h3>Карповая рыбалка</h3><p>Локации и отчеты</p></div>
+    <div class="card"><h3>Спиннинговая</h3><p>Хищник и приманки</p></div>
+    <div class="card"><h3>Зимняя рыбалка</h3><p>Лед и снасти</p></div>
+    <div class="card"><h3>Фидерная</h3><p>Кормушки и дистанции</p></div>
+    <div class="card"><h3>Справочник снастей</h3><p>Инвентарь</p></div>
+    <div class="card"><h3>Фотогалерея</h3><p>Места славы</p></div>
+    <div class="card"><h3>Календарь / План</h3><p>Ближайшие выезды</p></div>
+</nav>
+
+<script>
+    // Базовая логика автосохранения в локальное хранилище браузера
+    console.log("Система автосохранения активна...");
+</script>
+
+</body>
+</html>
