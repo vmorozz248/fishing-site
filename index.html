@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fishing Arsenal Premium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <title>Fishing Arsenal 3D</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         :root {
-            --black-bg: #0a0a0a; 
-            --card-bg: #161616;  
+            --black-bg: #050505; 
+            --card-bg: #111111;  
             --bright-blue: #00d2ff; 
             --neon-cyan: #3aedff;   
-            --deep-ocean: #0077be;  
             --text-white: #ffffff;
         }
 
@@ -21,70 +21,53 @@
             color: var(--text-white);
             margin: 0;
             padding: 0;
-            letter-spacing: 0.5px;
             overflow-x: hidden;
         }
 
-        /* --- ШАПКА С АНИМАЦИЕЙ --- */
-        header {
-            background: linear-gradient(180deg, #001f3f 0%, var(--black-bg) 100%);
-            border-bottom: 3px solid var(--bright-blue);
-            padding: 3rem 1rem;
-            text-align: center;
+        /* --- 3D КОНТЕЙНЕР ШАПКИ --- */
+        #header-3d {
+            width: 100%;
+            height: 450px;
+            background: radial-gradient(circle at center, #001f3f 0%, #050505 100%);
             position: relative;
-            overflow: hidden;
+            border-bottom: 2px solid var(--bright-blue);
         }
 
-        .fishing-animation {
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        #canvas-container {
+            width: 100%;
+            height: 100%;
         }
 
-        /* Анимация катушки */
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .header-overlay {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            pointer-events: none;
         }
 
-        /* Анимация лески (вибрация) */
-        @keyframes tension {
-            0% { stroke-dashoffset: 0; }
-            50% { stroke-dashoffset: 2; }
-            100% { stroke-dashoffset: 0; }
-        }
-
-        .reel {
-            transform-origin: 35px 75px; /* Точка центра катушки */
-            animation: spin 2s linear infinite;
-        }
-
-        .fishing-line {
-            stroke-dasharray: 4;
-            animation: tension 0.1s infinite linear;
-        }
-
-        header h1 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 3.5rem;
+        .header-overlay p {
+            font-family: 'Oswald';
             text-transform: uppercase;
-            font-weight: 700;
-            margin: 0;
-            letter-spacing: 4px;
-            text-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+            letter-spacing: 5px;
+            color: var(--bright-blue);
+            animation: pulse 2s infinite;
         }
 
-        /* --- ОСТАЛЬНЫЕ СТИЛИ --- */
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        /* --- КОНТЕНТ --- */
         .container {
             max-width: 1100px;
-            margin: -20px auto 40px;
+            margin: 40px auto;
             padding: 0 20px;
             display: grid;
             grid-template-columns: 1fr 350px;
             gap: 30px;
-            position: relative;
-            z-index: 2;
         }
 
         .main-content {
@@ -97,92 +80,53 @@
             background: var(--card-bg);
             border: 1px solid #222;
             padding: 30px;
-            border-radius: 0;
             border-left: 4px solid var(--bright-blue);
-            text-align: left;
             transition: 0.3s ease;
             cursor: pointer;
         }
 
         .card:hover { 
-            background: #202020;
+            background: #1a1a1a;
             border-left: 10px solid var(--neon-cyan);
-            transform: translateX(10px);
+            transform: scale(1.02);
         }
 
         .card h3 { 
             font-family: 'Oswald', sans-serif;
             color: var(--bright-blue); 
             margin: 0 0 10px 0;
-            font-size: 1.6rem;
             text-transform: uppercase;
         }
 
         .sidebar {
             background: var(--card-bg);
             padding: 30px;
-            border-radius: 0;
-            border: 1px solid #222;
             border-top: 5px solid var(--bright-blue);
-            height: fit-content;
-        }
-
-        .vote-section {
-            text-align: center;
-            background: #000;
-            padding: 25px;
-            border: 1px solid #333;
-            margin-top: 20px;
         }
 
         button {
-            font-family: 'Oswald', sans-serif;
+            font-family: 'Oswald';
             background: var(--bright-blue);
             color: #000;
             border: none;
             padding: 15px;
             text-transform: uppercase;
             font-weight: 700;
-            font-size: 1.2rem;
-            cursor: pointer;
             width: 100%;
-            transition: 0.2s;
+            cursor: pointer;
         }
 
-        button:hover { 
-            background: var(--neon-cyan);
-            box-shadow: 0 0 20px var(--bright-blue);
-        }
-
-        #counter { 
-            font-family: 'Oswald', sans-serif;
-            font-size: 4rem; 
-            color: var(--text-white);
-            margin: 10px 0;
-        }
-
-        @media (max-width: 850px) {
-            .container { grid-template-columns: 1fr; margin-top: 20px; }
-        }
+        #counter { font-family: 'Oswald'; font-size: 4rem; text-align: center; margin: 10px 0; }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="fishing-animation">
-        <svg width="200" height="100" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20 90L180 20" stroke="#555" stroke-width="4" stroke-linecap="round"/>
-            <g class="reel">
-                <circle cx="35" silver cy="75" r="12" stroke="var(--bright-blue)" stroke-width="3" fill="#222"/>
-                <line x1="35" y1="65" x2="35" y2="85" stroke="var(--bright-blue)" stroke-width="2"/>
-                <line x1="25" y1="75" x2="45" y2="75" stroke="var(--bright-blue)" stroke-width="2"/>
-            </g>
-            <path class="fishing-line" d="M180 20L195 95" stroke="white" stroke-width="1" opacity="0.6"/>
-        </svg>
+<div id="header-3d">
+    <div id="canvas-container"></div>
+    <div class="header-overlay">
+        <p>Нажми на экран, чтобы подсечь!</p>
     </div>
-    <h1>FISHING ARSENAL</h1>
-    <p style="text-transform: uppercase; letter-spacing: 2px; color: var(--bright-blue); margin: 5px 0 0 0;">Твой личный центр управления</p>
-</header>
+</div>
 
 <div class="container">
     <div class="main-content">
@@ -194,16 +138,86 @@
     </div>
 
     <div class="sidebar">
-        <h3 style="font-family: 'Oswald'; text-transform: uppercase;">Планирование</h3>
-        <p>БЛИЖАЙШИЙ ВЫЕЗД: <b>04.03.2026</b></p>
-        <div class="vote-section">
-            <p>ГОТОВНОСТЬ ГРУППЫ:</p>
-            <div id="counter">0</div>
-            <p>УЧАСТНИКОВ</p>
-            <button onclick="castVote()">ПОДТВЕРДИТЬ УЧАСТИЕ</button>
-        </div>
+        <h3>ПЛАНИРОВАНИЕ</h3>
+        <div id="counter">0</div>
+        <button onclick="castVote()">ПОДТВЕРДИТЬ УЧАСТИЕ</button>
     </div>
 </div>
+
+<script type="module">
+    // --- 3D ЛОГИКА ---
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
+
+    // Освещение
+    const light = new THREE.PointLight(0x00d2ff, 1, 100);
+    light.position.set(0, 10, 10);
+    scene.add(light);
+    scene.add(new THREE.AmbientLight(0x404040));
+
+    // Создаем "Удочку" (простой цилиндр под углом)
+    const rodGeometry = new THREE.CylinderGeometry(0.2, 0.5, 15, 32);
+    const rodMaterial = new THREE.MeshStandardMaterial({ color: 0x222222 });
+    const rod = new THREE.Mesh(rodGeometry, rodMaterial);
+    rod.rotation.z = Math.PI / 4;
+    rod.position.set(-5, -2, 0);
+    scene.add(rod);
+
+    // Создаем "Текст" (как спрайт, чтобы вылетал)
+    const loader = new THREE.FontLoader();
+    // Мы используем упрощенный метод через Canvas для текста, чтобы не грузить тяжелые шрифты
+    function createTextTexture() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1024; canvas.height = 256;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#00d2ff';
+        ctx.font = 'Bold 120px Oswald';
+        ctx.textAlign = 'center';
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = '#00d2ff';
+        ctx.fillText('FISHING ARSENAL', 512, 150);
+        return new THREE.CanvasTexture(canvas);
+    }
+
+    const textGeo = new THREE.PlaneGeometry(10, 2.5);
+    const textMat = new THREE.MeshBasicMaterial({ map: createTextTexture(), transparent: true, opacity: 0 });
+    const textMesh = new THREE.Mesh(textGeo, textMat);
+    textMesh.position.set(5, -10, 2); // Спрятан внизу
+    scene.add(textMesh);
+
+    camera.position.z = 12;
+
+    // Анимация вытягивания
+    let time = 0;
+    function animate() {
+        requestAnimationFrame(animate);
+        time += 0.02;
+
+        // Покачивание удочки
+        rod.rotation.x = Math.sin(time) * 0.05;
+        
+        // Появление текста (вылетает снизу)
+        if (textMesh.position.y < 2) {
+            textMesh.position.y += 0.1;
+            textMesh.opacity = Math.min(textMat.opacity + 0.01, 1);
+            textMat.opacity = textMesh.opacity;
+        }
+
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    // Обработка изменения размера окна
+    window.addEventListener('resize', () => {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+</script>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
